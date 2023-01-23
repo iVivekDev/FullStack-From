@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import FormInputs from '../components/FormInputs'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,17 +6,13 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    // useEffect(() => {
-    //     if (localStorage.getItem("token")) {
-    //         Navigate("/Home")
-    //     }
-    // }, [])
+
     const [inputValues, setInputValues] = useState({
         email: "",
         password: "",
     });
     const { email, password } = inputValues;
-
+    
     const Navigate = useNavigate()
     const Inputs = [
         {
@@ -58,19 +54,16 @@ const Login = () => {
                     password: password
                 })
                 localStorage.setItem("Token", LoginData.data.token);
-                toast.success(LoginData.data, {
+
+                toast.success(LoginData.data.message, {
                     position: toast.POSITION.TOP_RIGHT
                 });
-
                 setTimeout(() => {
                     Navigate("/Home")
                 }, 1000)
-
                 setInputValues("")
-                console.log("LoginData", LoginData.data.token);
             }
         } catch (error) {
-            console.log(error.response.data);
             toast.error(error.response.data, {
                 position: toast.POSITION.TOP_RIGHT
             });
